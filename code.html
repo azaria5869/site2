@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Профиль навыков — Чернышев Владислав Владимирович</title>
+
+  <style>
+    :root{
+      --bg-0:#070A12;
+      --bg-1:#0B1020;
+      --card:#0E1630cc;
+      --card-2:#0E1630a6;
+      --stroke:rgba(255,255,255,.10);
+
+      --text:#EAF0FF;
+      --muted:rgba(234,240,255,.72);
+
+      --accent1:#7C3AED; /* violet */
+      --accent2:#22D3EE; /* cyan */
+      --accent3:#F97316; /* orange */
+      --good:#34D399;
+
+      --shadow: 0 20px 60px rgba(0,0,0,.55);
+      --shadow-soft: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 15% 10%, rgba(124,58,237,.30), transparent 55%),
+        radial-gradient(900px 700px at 85% 15%, rgba(34,211,238,.22), transparent 55%),
+        radial-gradient(900px 700px at 55% 95%, rgba(249,115,22,.12), transparent 55%),
+        linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      overflow-x:hidden;
+    }
+
+    /* subtle noise */
+    body:before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="180" height="180" filter="url(%23n)" opacity=".22"/></svg>');
+      opacity:.07;
+      mix-blend-mode:overlay;
+    }
+
+    .container{
+      width:min(1100px, 92vw);
+      margin: clamp(22px, 4vw, 48px) auto;
+      position:relative;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom: 18px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(10px);
+    }
+    .dot{
+      width:10px; height:10px;
+      border-radius:999px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent1));
+      box-shadow: 0 0 0 4px rgba(34,211,238,.10);
+    }
+    .badge span{
+      font-size:13px;
+      color: var(--muted);
+      letter-spacing:.2px;
+    }
+
+    header.hero{
+      border:1px solid var(--stroke);
+      border-radius: calc(var(--radius) + 8px);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      padding: clamp(18px, 4vw, 34px);
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* accent “light” streak */
+    header.hero:after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(700px 160px at 20% 0%, rgba(124,58,237,.18), transparent 60%),
+        radial-gradient(600px 160px at 75% 10%, rgba(34,211,238,.14), transparent 60%);
+      pointer-events:none;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 18px;
+      align-items:start;
+      position:relative;
+      z-index:1;
+    }
+
+    .name{
+      margin:0;
+      font-size: clamp(26px, 4.2vw, 44px);
+      line-height:1.08;
+      letter-spacing:-.6px;
+    }
+
+    /* Gradient text + transparency effect */
+    .name .gradient{
+      background: linear-gradient(110deg, rgba(124,58,237,.95), rgba(34,211,238,.95), rgba(249,115,22,.85));
+      -webkit-background-clip: text;
+      background-clip:text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      position:relative;
+      display:inline-block;
+    }
+    /* “glass” transparency overlay */
+    .name .gradient:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,0));
+      mix-blend-mode: overlay;
+      opacity:.35;
+      pointer-events:none;
+    }
+
+    .subtitle{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: clamp(14px, 1.6vw, 16px);
+      line-height:1.5;
+      max-width: 60ch;
+    }
+
+    .hero-side{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .stat{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 14px 14px;
+      background: linear-gradient(180deg, rgba(14,22,48,.65), rgba(14,22,48,.35));
+      box-shadow: var(--shadow-soft);
+    }
+    .stat .k{
+      font-size:12px;
+      color: rgba(234,240,255,.62);
+      letter-spacing:.28px;
+      text-transform:uppercase;
+    }
+    .stat .v{
+      margin-top:6px;
+      font-size: 16px;
+      font-weight: 650;
+    }
+    .stat .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-top:10px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(52,211,153,.22);
+      background: rgba(52,211,153,.10);
+      color: rgba(234,240,255,.88);
+      font-size: 12px;
+    }
+    .stat .pill i{
+      width:8px;height:8px;border-radius:999px;
+      background: var(--good);
+      box-shadow: 0 0 0 4px rgba(52,211,153,.12);
+      display:inline-block;
+    }
+
+    .section{
+      margin-top: 22px;
+    }
+    .section-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin: 18px 0 12px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:-.2px;
+    }
+    .section-title .accent-line{
+      flex:1;
+      height:1px;
+      background: linear-gradient(90deg, rgba(255,255,255,.10), rgba(34,211,238,.40), rgba(124,58,237,.35), rgba(255,255,255,.08));
+      border-radius:999px;
+      opacity:.9;
+    }
+
+    /* Skill cards */
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+
+    .card{
+      grid-column: span 6;
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 16px 16px 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: var(--shadow-soft);
+      position:relative;
+      overflow:hidden;
+
+      transform: translateY(0);
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    }
+
+    .card:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(420px 220px at 10% 0%, rgba(34,211,238,.16), transparent 55%),
+                  radial-gradient(420px 220px at 80% 20%, rgba(124,58,237,.16), transparent 55%);
+      opacity:.75;
+      pointer-events:none;
+    }
+
+    .card:hover{
+      transform: translateY(-4px);
+      border-color: rgba(34,211,238,.35);
+      box-shadow: 0 18px 50px rgba(0,0,0,.48);
+    }
+
+    .card-inner{ position:relative; z-index:1; }
+
+    .card-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(234,240,255,.86);
+      white-space:nowrap;
+    }
+    .chip b{
+      font-weight:650;
+      color: rgba(234,240,255,.95);
+    }
+
+    .spark{
+      width:34px; height:34px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(135deg, rgba(34,211,238,.18), rgba(124,58,237,.18));
+      display:grid;
+      place-items:center;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    .spark svg{ opacity:.9; }
+
+    .card h3{
+      margin: 10px 0 6px;
+      font-size: 16px;
+      letter-spacing:-.15px;
+    }
+    .card p{
+      margin:0;
+      color: var(--muted);
+      line-height:1.55;
+      font-size: 14px;
+    }
+
+    /* Case blocks */
+    .cases{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+    .case{
+      grid-column: span 6;
+      border-radius: var(--radius);
+      border: 1px solid rgba(34,211,238,.20);
+      background: linear-gradient(180deg, rgba(34,211,238,.10), rgba(14,22,48,.30));
+      padding: 14px 14px 12px;
+      position:relative;
+      overflow:hidden;
+    }
+    .case:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(520px 240px at 0% 0%, rgba(34,211,238,.20), transparent 55%);
+      pointer-events:none;
+      opacity:.9;
+    }
+    .case-inner{ position:relative; z-index:1; }
+    .case .label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
+      color: rgba(234,240,255,.86);
+      margin-bottom:8px;
+    }
+    .case .label i{
+      width:10px;height:10px;border-radius:999px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent1));
+      box-shadow: 0 0 0 4px rgba(34,211,238,.10);
+      display:inline-block;
+    }
+    .case h4{
+      margin: 0 0 6px;
+      font-size: 15px;
+      letter-spacing:-.12px;
+    }
+    .case ul{
+      margin:0;
+      padding-left: 18px;
+      color: rgba(234,240,255,.80);
+      line-height:1.55;
+      font-size: 13.5px;
+    }
+    .case li{ margin: 4px 0; }
+
+    /* Tools tags grid */
+    .tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      padding: 14px;
+      border-radius: var(--radius);
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow: var(--shadow-soft);
+    }
+    .tag{
+      padding:8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: rgba(234,240,255,.86);
+      font-size: 12.5px;
+      letter-spacing:.12px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .tag:hover{
+      transform: translateY(-2px);
+      border-color: rgba(124,58,237,.35);
+      background: rgba(124,58,237,.12);
+    }
+
+    footer{
+      margin: 18px 0 8px;
+      color: rgba(234,240,255,.55);
+      font-size: 12px;
+      text-align:center;
+    }
+
+    /* Responsive */
+    @media (max-width: 880px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .card{ grid-column: span 12; }
+      .case{ grid-column: span 12; }
+    }
+    @media (max-width: 420px){
+      .badge{ width:100%; justify-content:center; }
+      .topbar{ flex-direction:column; align-items:stretch; }
+      .stat .v{ font-size: 15px; }
+      .card{ padding: 14px; }
+      .case{ padding: 12px; }
+      .tags{ padding: 12px; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; scroll-behavior:auto !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <div class="topbar">
+      <div class="badge" aria-label="Профиль">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Портфолио навыков • AI / Нейросети</span>
+      </div>
+      <div class="badge" aria-label="Статус">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Обновлено: <b style="color:rgba(234,240,255,.92)">сегодня</b></span>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="hero-grid">
+        <div>
+          <h1 class="name">
+            <span class="gradient">Чернышев Владислав Владимирович</span>
+          </h1>
+          <p class="subtitle">
+            1. Ключевые AI навыки и практические кейсы — структурированная подача с акцентом на результат,
+            понятная даже человеку без технического бэкграунда.
+          </p>
+        </div>
+
+        <aside class="hero-side">
+          <div class="stat">
+            <div class="k">Фокус</div>
+            <div class="v">Личная эффективность и поиск информации</div>
+            <div class="pill"><i></i> Практический подход</div>
+          </div>
+          <div class="stat">
+            <div class="k">Формат</div>
+            <div class="v">Навыки → кейсы → инструменты</div>
+            <div class="pill"><i></i> Быстро читается</div>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="section-title">
+        <h2>Навыки</h2>
+        <div class="accent-line" aria-hidden="true"></div>
+      </div>
+
+      <div class="cards" role="list">
+        <article class="card" role="listitem">
+          <div class="card-inner">
+            <div class="card-top">
+              <span class="chip"><b>1.1</b> Практика</span>
+              <div class="spark" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2l1.2 5.3L18 6l-3.2 4.4L19 14l-5.3.7L12 20l-1.7-5.3L5 14l4.2-3.6L6 6l4.8 1.3L12 2z" stroke="rgba(234,240,255,.9)" stroke-width="1.6" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <h3>Эффективная работа с нейросетями</h3>
+            <p>Подбор подходящего инструмента под задачу, быстрые итерации, получение результата без «лишней магии».</p>
+          </div>
+        </article>
+
+        <article class="card" role="listitem">
+          <div class="card-inner">
+            <div class="card-top">
+              <span class="chip"><b>1.2</b> Понимание</span>
+              <div class="spark" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 18h.01M9 9a3 3 0 116 0c0 2-3 2-3 5" stroke="rgba(234,240,255,.9)" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20z" stroke="rgba(234,240,255,.9)" stroke-width="1.6"/>
+                </svg>
+              </div>
+            </div>
+            <h3>Различаю ИИ, нейросети и ChatGPT и объясняю разницу простым языком</h3>
+            <p>Умею переводить «технические термины» в понятные примеры и корректно задавать ожидания от инструментов.</p>
+          </div>
+        </article>
+
+        <article class="card" role="listitem">
+          <div class="card-inner">
+            <div class="card-top">
+              <span class="chip"><b>1.3</b> Скорость</span>
+              <div class="spark" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 12a9 9 0 11-3-6.7" stroke="rgba(234,240,255,.9)" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M21 3v6h-6" stroke="rgba(234,240,255,.9)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <h3>Экономлю время на поиске информации: чат-боты вместо Google</h3>
+            <p>Формулирую запросы так, чтобы получать готовые ответы, структурирование и краткие выжимки.</p>
+          </div>
+        </article>
+
+        <article class="card" role="listitem">
+          <div class="card-inner">
+            <div class="card-top">
+              <span class="chip"><b>1.4</b> Эффективность</span>
+              <div class="spark" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7z" stroke="rgba(234,240,255,.9)" stroke-width="1.6" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <h3>Применяю нейросети для личной эффективности</h3>
+            <p>Планирование, черновики текстов, резюме, чек-листы, подготовка структур и сценариев под задачу.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h2>Примеры кейсов</h2>
+        <div class="accent-line" aria-hidden="true"></div>
+      </div>
+
+      <div class="cases">
+        <div class="case">
+          <div class="case-inner">
+            <div class="label"><i></i> Кейс 1</div>
+            <h4>«Быстрый поиск и структурирование»</h4>
+            <ul>
+              <li>Сформулировать запрос так, чтобы получить 3–5 ключевых тезисов вместо длинных ссылок.</li>
+              <li>Преобразовать ответ в чек-лист действий или краткий план.</li>
+              <li>Сократить время на «перечитывание источников» за счёт выжимки.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="case">
+          <div class="case-inner">
+            <div class="label"><i></i> Кейс 2</div>
+            <h4>«Пояснение терминов для команды/клиента»</h4>
+            <ul>
+              <li>Объяснить разницу: ИИ → нейросети → языковые модели → ChatGPT (простыми словами).</li>
+              <li>Снять завышенные ожидания: что инструмент умеет, а что — нет.</li>
+              <li>Дать примеры задач, где эффект будет максимальным.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h2>Инструменты</h2>
+        <div class="accent-line" aria-hidden="true"></div>
+      </div>
+
+      <div class="tags" aria-label="Сетка инструментов (теги)">
+        <span class="tag">ChatGPT</span>
+        <span class="tag">Промптинг</span>
+        <span class="tag">Суммаризация</span>
+        <span class="tag">Чек-листы</span>
+        <span class="tag">Структурирование</span>
+        <span class="tag">Поиск/ресёрч</span>
+        <span class="tag">Шаблоны запросов</span>
+        <span class="tag">Личная продуктивность</span>
+      </div>
+    </section>
+
+    <footer>
+      © Профиль навыков — Чернышев Владислав Владимирович
+    </footer>
+  </main>
+
+  <script>
+    // Небольшая микро-интерактивность: подсветка карточек от курсора (не ломает адаптивность)
+    (function () {
+      const cards = document.querySelectorAll(".card");
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReducedMotion) return;
+
+      cards.forEach(card => {
+        card.addEventListener("mousemove", (e) => {
+          const r = card.getBoundingClientRect();
+          const x = e.clientX - r.left;
+          const y = e.clientY - r.top;
+          card.style.setProperty("--mx", x + "px");
+          card.style.setProperty("--my", y + "px");
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
